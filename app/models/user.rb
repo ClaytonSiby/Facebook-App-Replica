@@ -31,6 +31,28 @@ class User < ApplicationRecord
 
   validate :picture_size
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  def friends_and_own_posts
+    myfriends = friends
+
+    our_posts = []
+
+    myfriends.each do |friend|
+      friend.posts.each do |post|
+        our_posts << post
+      end
+    end
+
+    posts.each do |post|
+      our_posts << post
+    end
+
+    our_posts
+  end
+
   private
 
   def picture_size
