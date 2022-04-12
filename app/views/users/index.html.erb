@@ -1,2 +1,97 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<h2 class="center">Who do you want to <span class="font-courgetter size-80">Spy</span></h2>
+
+<div class="container col-md-8">
+  <% unless @friends.empty? %>
+    <div class="card my-5 py-3 bg-light shadow">
+      <h2 class="center pb-3 text-dark border-bottom">My Friend</h2>
+      <% @friends.each do |friend| %>
+        <div class="d-flex align-items-center mb-2 border-bottom py-2">
+           <div class="col-auto p-0 pl-5 text-capitalize">
+             <%= link_to user_path(friend) do %>
+                <%= friend.full_name %>
+             <% end %>
+           </div>
+
+           <div class="col-auto p-0 px-1">|</div>
+           <div class="col-auto p-0">
+             <button class="btn btn-friend shadow">
+                <i class="fas fa-user-friends" /> Friend
+             </button>
+           </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% unless @pending_requests.empty? %>
+    <div class="card my-5 bg-light shadow">
+      <h2 class="center pb-3 text-dark border-bottom">
+        Sent Friend Requests
+      </h2>
+
+      <% @pending_requests.each do |user| %>
+        <div class="d-flex align-items-center mb-2 border-bottom py-2">
+          <div class="col-auto p-0 pl-5 text-capitalize">
+            <%= link_to user_path(user) do %>
+              <%= user.full_name %>
+            <% end %>
+          </div>
+
+          <div class="col-auto p-0 px-1">|</div>
+          <div class="col-auto p-0">
+            <button class="btn btn-secondary shadow" disabled>
+              <i class="fas fa-chalkboard-teacher" /> Friend Request pending . . .
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% unless @friend_requests.empty? %>
+    <div class="center my-5 py-3 bg-light shadow">
+      <h2 class="center pb-3 text-dark border-bottom">Pending Friend Requests</h2>
+      <% @friend_requests.each do |request| %>
+        <div class="d-flex align-items-center mb-2 border-bottom py-2">
+          <div class="col-auto p-0 pl-5 text-capitalize">
+            <%= link_to user_path(request) %>
+            <%= request.full_name %>
+          </div>
+
+          <div class="col-auto p-0 px-1">|</div>
+          <div class="col-auto p-0">
+            <button class="btn btn-pending shadow" data-toggle="modal" data-target="#decisionModal">
+              <i class="fas fa-envelope" /> Pending Friend Request . . .
+            </button>
+          </div>
+        </div>
+        <%= render 'friendships/decisionModal', object: user %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="card my-5 py-3 bg-light shadow">
+    <h2 class="center pb-3 border-bottom">Ohter Users</h2>
+    <% @users.each do |user| %>
+      <% if current_user.id != user.id %>
+        <% unless possible_friend?(user) %>
+          <div class="d-flex align-items-center mb-2 border-bottom pb-2">
+            <div class="col-auto p-0 pl-5 text-capitalize">
+              <%= link_to user_path(user) do %>
+                <%= user.full_name %>
+              <% end %>
+            </div>
+            <div class="col-auto p-0 px-1">|</div>
+            <div class="col-auto p-0">
+              <%= link_to user_friendships_path(user), method: :post do %>  
+                <button class="btn btn-user shadow">
+                  <i class="fas fa-share-square" /> Send Friend Request?
+                </button>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
