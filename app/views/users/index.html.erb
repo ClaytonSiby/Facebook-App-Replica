@@ -1,4 +1,9 @@
-<h2 class="center">Who do you want to <span class="font-courgetter size-80">Spy</span></h2>
+<h2 class="center mx-auto">Who do you want to <span class="font-courgetter size-80">Spy</span></h2>
+<p>
+  <% if user_signed_in? %>
+    <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-md' %>
+  <% end %>
+</p>
 
 <div class="container col-md-8">
   <% unless @friends.empty? %>
@@ -71,7 +76,7 @@
   <% end %>
 
   <div class="card my-5 py-3 bg-light shadow">
-    <h2 class="center pb-3 border-bottom">Ohter Users</h2>
+    <h2 class="center pb-3 border-bottom">Other Users</h2>
     <% @users.each do |user| %>
       <% if current_user.id != user.id %>
         <% unless possible_friend?(user) %>
