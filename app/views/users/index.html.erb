@@ -1,4 +1,8 @@
 <h2 class="center mx-auto">Who do you want to <span class="font-courgetter size-80">Spy</span></h2>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+  <%= link_to 'My Profile', user_path(current_user), class: "dropdown-item font-raleway" %>
+  <%= link_to "Log Out", destroy_user_session_path, class: "dropdown-item font-raleway", method: :delete%>
+</div>
 <p>
   <% if user_signed_in? %>
     <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-md' %>
