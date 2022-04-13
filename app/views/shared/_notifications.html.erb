@@ -1,0 +1,41 @@
+<!-- Modal -->
+
+<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="noticeModallabel">Notifications <%= current_user.notifications.count %></h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <% object.each do |n| %>
+          <% if n.notice_type == 'friendRequest' %>
+            <% user = notificatin_find(n, 'friendRequest') %>
+            <%= "Friend Request sent from #{user.full_name}" %>
+          <% end %>
+
+          <% if n.notice_type == 'comment' %>
+            <%= link_to post_path(notification_find(n, 'comment')) do %>
+              Someone liked your post
+            <% end %>
+          <% end %>
+
+          <% if n.notice_type == 'like-comment' %>
+            <%= link_to post_path(notification_find(n, 'like-comment')) do %>
+              Someone liked your comment under this post
+            <% end %>
+          <% end %>
+
+          <% if n.notice_type == 'like-post' %>
+            <%= link_to post_path(notification_find(n, 'like-post')) do %>
+              Someone liked your post
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
