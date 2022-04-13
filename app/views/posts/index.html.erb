@@ -1,5 +1,11 @@
-<div  class="col-auto">
-  <%= link_to users_path, class: "text-light nav-link font-raleway" do %>
-    <i class="fas fa-users fa-2x" /> Find Friends
+<h1>Timeline - My posts and my friends posts</h1>
+
+<div class="center font-raleway">
+  <%= link_to new_post_path, class: "btn btn-primary" do %>
+    New Post?
   <% end %>
 </div>
+
+<% @our_posts.each do |post| %>
+  <%= render 'posts/post_layout', object: post %>
+<% end %>
