@@ -32,4 +32,9 @@ class UsersController < ApplicationController
 
     redirect_back(fallback_location: root_path)
   end
+
+  def saw_notification
+    current_user.notice_seen = true
+    current_user.save
+  end
 end
